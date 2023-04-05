@@ -29,7 +29,7 @@ app.post('/', async (req, res) => {
 
     const response = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: `${prompt}`,
+      "prompt": "I am a Homemove advisor called Homer. If you ask me a question that is rooted in Homemove advice, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with \"this requires expert advice, our homemove advisor will be in touch\".\n\nQ: What is THE endpoint url for openai?\nA: The endpoint URL for OpenAI is https://api.openai.com/v1/engines/davinci/completions.\n\nQ: ",
       temperature: 0, // Higher values means the model will take more risks.
       max_tokens: 3000, // The maximum number of tokens to generate in the completion. Most models have a context length of 2048 tokens (except for the newest models, which support 4096).
       top_p: 1, // alternative to sampling with temperature, called nucleus sampling
