@@ -26,16 +26,10 @@ app.get('/', async (req, res) => {
 app.post('/', async (req, res) => {
   try {
     const prompt = req.body.prompt;
-    const { Configuration, OpenAIApi } = require("openai");
 
-    const configuration = new Configuration({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
-    const openai = new OpenAIApi(configuration);
-    
     const response = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: "I am a Homemove advisor called Homer. If you ask me a question that is rooted in Homemove advice, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with \"this requires expert advice, speak to our homemove advisor hello@homemove.com.\".",
+      prompt: `I am a Homemove advisor called Homer. If you ask me a question that is rooted in Homemove advice, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with "this requires expert advice, our homemove advisor will be in touch". ${prompt}`,
       temperature: 0,
       max_tokens: 100,
       top_p: 1,
@@ -45,7 +39,7 @@ app.post('/', async (req, res) => {
     });
 
     res.status(200).send({
-      bot: response.data.choices[0].text
+      bot: response.data.choices[0].text.trim()
     });
 
   } catch (error) {
